@@ -1,6 +1,8 @@
 2048c -- a console implementation of 2048
 =========================================
 
+![2048c screenshot](https://cfallin.github.io/2048c/2048c.png)
+
 This is a simple implementation of the popular
 [2048](https://gabrielecirulli.github.io/2048/) puzzle game for a text-mode
 console, written in C. It should work on any reasonable GNU/Linux or Unix-like
