@@ -59,7 +59,13 @@ int board_fill_random_cell(board_t *b, int random_value);
 
 void ui_setup();
 void ui_draw(board_t *b);
-/* returns `1` to indicate exit was requested. */
-int ui_key(board_t *b, int key);
+
+typedef enum {
+    UI_ACCEPTED,
+    UI_IGNORE,
+    UI_EXIT,
+} ui_result_t;
+
+ui_result_t ui_key(board_t *b, int key);
 
 #endif  // _2048C_H_

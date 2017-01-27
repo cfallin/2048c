@@ -238,7 +238,7 @@ void ui_draw(board_t *b) {
         printw("GAME OVER!");
     }
     move(3 + 2*BOARD_ROWS, 1);
-    printw("ESC OR q TO EXIT, r TO RESET");
+    printw("CTRL-C OR q TO EXIT, r TO RESET");
     move(5 + 2*BOARD_ROWS, 1);
     printw("2048c v0.1");
     move(6 + 2*BOARD_ROWS, 1);
@@ -246,28 +246,31 @@ void ui_draw(board_t *b) {
     move(7 + 2*BOARD_ROWS, 1);
 }
 
-int ui_key(board_t *b, int key) {
+ui_result_t ui_key(board_t *b, int key) {
     switch (key) {
-        case /* ESC */ 27:
+        case /* Escape */ 27:
+        case /* Ctrl-C */ 'C' - 0x40:
         case 'Q':
         case 'q':
             /* exit */
-            return 1;
+            return UI_EXIT;
         case 'r':
             board_reset(b);
-            break;
+            return UI_ACCEPTED;
         case KEY_UP:
             board_move(b, UP);
-            break;
+            return UI_ACCEPTED;
         case KEY_DOWN:
             board_move(b, DOWN);
-            break;
+            return UI_ACCEPTED;
         case KEY_RIGHT:
             board_move(b, RIGHT);
-            break;
+            return UI_ACCEPTED;
         case KEY_LEFT:
             board_move(b, LEFT);
-            break;
+            return UI_ACCEPTED;
+        default:
+            return UI_IGNORE;
     }
     return 0;
 }
@@ -275,18 +278,20 @@ int ui_key(board_t *b, int key) {
 /* ------------- main -------------- */
 int main() {
     board_t b;
-    int quit = 0;
+    ui_result_t result = UI_ACCEPTED;
     int ch = 0;
 
     srand((int)time(NULL));
 
     board_reset(&b);
     ui_setup();
-    while (!quit) {
-        board_fill_random_cell(&b, rand());
+    while (result != UI_EXIT) {
+        if (result == UI_ACCEPTED) {
+            board_fill_random_cell(&b, rand());
+        }
         ui_draw(&b);
         ch = getch();
-        quit = ui_key(&b, ch);
+        result = ui_key(&b, ch);
     }
 
     return 0;

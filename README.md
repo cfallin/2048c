@@ -8,7 +8,7 @@ This is a simple implementation of the popular
 console, written in C. It should work on any reasonable GNU/Linux or Unix-like
 system.
 
-Gameplay is simple: arrow keys to move the tiles up/down/left/right, and Escape
+Gameplay is simple: arrow keys to move the tiles up/down/left/right, and Ctrl-C
 or 'q' to quit. The 'r' key resets the board. Have fun!
 
 Compiling
