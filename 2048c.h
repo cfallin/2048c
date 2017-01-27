@@ -1,3 +1,11 @@
+/*
+ * 2048c -- a console implementation of 2048
+ *
+ * Copyright (c) 2017, Chris Fallin <cfallin@c1f.net>
+ *
+ * Released under the MIT License.
+ */
+
 #ifndef _2048C_H_
 #define _2048C_H_
 
