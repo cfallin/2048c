@@ -15,33 +15,27 @@ typedef int cell_t;
 #define BOARD_ROWS 4
 #define BOARD_COLUMNS 4
 
-typedef struct board_t board_t;
-struct board_t {
+typedef struct {
     cell_t cells[BOARD_ROWS * BOARD_COLUMNS];
-};
+} board_t;
 
-void board_reset(board_t *b);
-
-static void board_set(board_t *b, int row, int column, cell_t value) {
-    b->cells[row*BOARD_COLUMNS + column] = value;
-}
-static cell_t board_get(board_t *b, int row, int column) {
-    return b->cells[row*BOARD_COLUMNS + column];
-}
-
-enum dir_t {
+typedef enum {
     UP = 1,
     DIR_FIRST = UP,
     DOWN = 2,
     LEFT = 3,
     RIGHT = 4,
     DIR_LAST = RIGHT,
-};
+} dir_t;
 
+/* reset the board to empty */
+void board_reset(board_t *b);
 /* returns `1` if two or more cells merged. */ 
 int board_move(board_t *b, dir_t dir);
-/* returns `1` if a move in any direction could cause a merge. */
+/* returns `1` if a move in any direction is possible. */
 int board_can_move(board_t *b);
+/* returns `1` if the user has won (has a 2048 tile) */
+int board_is_win(board_t *b);
 /* fills a random cell with a new `2` or `4` tile, unless no empty
  * spaces are left. Returns `1` if tile could be inserted. Requires
  * an arbitrary integer value `random_value` with which the random
@@ -50,7 +44,8 @@ int board_fill_random_cell(board_t *b, int random_value);
 
 /* ------------- UI ------------ */
 
-#define UI_CELL_COLS 7
+#define UI_CELL_COLS 8
+#define UI_ROW_WIDTH ((BOARD_COLUMNS * UI_CELL_COLS) + 1)
 #define UI_CELL_FMT "%6d "
 #define UI_CELL_EMPTY "       "
 
